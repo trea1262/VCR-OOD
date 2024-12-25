@@ -1,5 +1,5 @@
 # Causal Debiasing for Visual Commonsense Reasoning (Accepted by ICASSP 2025)
-
+The code is for Causal Debiasing for Visual Commonsense Reasoning.
 #### Requirements
 ```
 conda install numpy pyyaml setuptools cmake cffi tqdm pyyaml scipy ipython mkl mkl-include cython typing h5py pandas nltk spacy numpydoc scikit-learn jpeg
