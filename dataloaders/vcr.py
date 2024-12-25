@@ -119,7 +119,7 @@ class VCR(Dataset):
         self.add_image_as_a_box = add_image_as_a_box
         self.conditioned_answer_choice = conditioned_answer_choice
 
-        with open(os.path.join(VCR_ANNOTS_DIR, '{}112.jsonl'.format(split)), 'r') as f:
+        with open(os.path.join(VCR_ANNOTS_DIR, '{}111.jsonl'.format(split)), 'r') as f:
             self.items = [json.loads(s) for s in f]
 
         if split not in ('test', 'train', 'val'):
@@ -137,7 +137,7 @@ class VCR(Dataset):
         self.coco_obj_to_ind = {o: i for i, o in enumerate(self.coco_objects)}
 
         self.embs_to_load = embs_to_load
-        self.h5fn = os.path.join(BERT_DIR, f'{self.embs_to_load}_{self.mode}_{self.split}112.h5')
+        self.h5fn = os.path.join(BERT_DIR, f'{self.embs_to_load}_{self.mode}_{self.split}111.h5')
         print("Loading embeddings from {}".format(self.h5fn), flush=True)
 
     @property
