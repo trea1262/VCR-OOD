@@ -1,5 +1,8 @@
 # Causal Debiasing for Visual Commonsense Reasoning (Accepted by ICASSP 2025)
 The code is for Causal Debiasing for Visual Commonsense Reasoning.
+#### Paper
+Visual Commonsense Reasoning (VCR) refers to answering questions and providing explanations based on images. While existing methods achieve high prediction accuracy, they often overlook bias in datasets and lack debiasing strategies. In this paper, our analysis reveals co-occurrence and statistical biases in both textual and visual data. We introduce the VCR-OOD datasets, comprising VCR-OOD-QA and VCR-OOD-VA subsets, which are designed to evaluate the generalization capabilities of models across two modalities. Furthermore, we analyze the causal graphs and prediction shortcuts in VCR and adopt a backdoor adjustment method to remove bias. Specifically, we create a dictionary based on the set of correct answers to eliminate prediction shortcuts. Experiments demonstrate the effectiveness of our debiasing method across different datasets.
+
 #### Requirements
 ```
 conda install numpy pyyaml setuptools cmake cffi tqdm pyyaml scipy ipython mkl mkl-include cython typing h5py pandas nltk spacy numpydoc scikit-learn jpeg
