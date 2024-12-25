@@ -21,7 +21,7 @@ from torch.nn import DataParallel
 from torch.nn.modules import BatchNorm2d
 from tqdm import tqdm
 import sys
-sys.path.append('/data/zoujy/MSGT')
+sys.path.append('')
 from dataloaders.vcr_plus import VCR, VCRLoader
 #from dataloaders.vcr_attribute_new_tag import VCR, VCRLoader
 from utils.pytorch_misc import time_batch, save_checkpoint, clip_grad_norm, \
@@ -36,7 +36,6 @@ import models
 import random
 torch.backends.cudnn.enable =True
 
-#os.environ["CUDA_VISIBLE_DEVICES"] = '0,1,2,3,8,9'
 #################################
 #################################
 ######## Data loading stuff
@@ -49,7 +48,7 @@ parser.add_argument(
     '-params',
     dest='params',
     help='Params location',
-    default='/data/zoujy/MSGT/models/multiatt/default_MSGT.json',
+    default='VCR-OOD/models/multiatt/default_vcr.json',
     type=str,
 )
 parser.add_argument(
@@ -62,14 +61,14 @@ parser.add_argument(
     '-folder',
     dest='folder',
     help='folder location',
-    default="/data/zoujy/MSGT/saves/s/answer",
+    default="/data/saves/answer",
     type=str,
 )
 parser.add_argument(
     '-folder1',
     dest='folder1',
     help='folder location',
-    default="/data/zoujy/MSGT/saves/c/answer2",
+    default="/data/saves/answer2",
     type=str,
 )
 parser.add_argument(
@@ -107,11 +106,7 @@ train, val= VCR.splits(mode='rationale' if args.rationale else 'answer',
                               embs_to_load=params['dataset_reader'].get('embs', 'bert_da'),
                               only_use_relevant_dets=params['dataset_reader'].get('only_use_relevant_dets', False))
 #, test 
-'''for batch in train:
-    # 在每个 batch 中对数据进行采样
-    train = random.sample(batch, k=2) 
-for batch in val:
-    val = random.sample(batch, k=2) '''
+
 NUM_GPUS = torch.cuda.device_count()
 NUM_CPUS = multiprocessing.cpu_count()
 if NUM_GPUS == 0:
@@ -125,7 +120,7 @@ def _to_gpu(td):
             td[k] = {k2: v.cuda(non_blocking=True) for k2, v in td[k].items()} if isinstance(td[k], dict) else td[k].cuda(
                 non_blocking=True)
     return td
-num_workers = 4#64#(4 * NUM_GPUS if NUM_CPUS == 32 else 2*NUM_GPUS)-1
+num_workers = 4#(4 * NUM_GPUS if NUM_CPUS == 32 else 2*NUM_GPUS)-1
 print(f"Using {num_workers} workers out of {NUM_CPUS} possible", flush=True)
 loader_params = {'batch_size': 8 // NUM_GPUS, 'num_gpus':NUM_GPUS, 'num_workers':num_workers}
 train_loader = VCRLoader.from_dataset(train, **loader_params)
